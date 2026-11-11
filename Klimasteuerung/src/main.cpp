@@ -1,7 +1,7 @@
 #include <Arduino.h>
 #include <DHT.h>
-const int DHT_PIN = NULL;                // aus der Pintabelle
-const int LED_PIN = NULL;                // aus der Pintabelle
+const int DHT_PIN = 22;                // aus der Pintabelle
+const int LED_PIN = 5;                // aus der Pintabelle
 const float GRENZWERT_FEUCHTE = 60.0;    // in Prozent
 const unsigned long INTERVALL_MS = 2000; // der DHT22 misst höchstens alle 2 s
 
@@ -25,12 +25,14 @@ void loop()
     
     if (isnan(feuchte) || isnan(temperatur))
     {
-      // TODO: Fehlermeldung ausgeben, LED aus
+      Serial.println("Error: Temperature or Humidity is NaN");
     }
     else
     {
-      // TODO: Messwerte ausgeben
-      // TODO: LED abhängig vom Grenzwert schalten
+      float temperature = dht.readTemperature(false);
+      float humidity = dht.readHumidity();
+
+      Serial.printf("Temperature: %.2f°C, Humidity: %.2f%%\n", temperature, humidity);
     }
   }
 }
