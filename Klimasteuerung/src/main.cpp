@@ -33,6 +33,14 @@ void loop()
       float humidity = dht.readHumidity();
 
       Serial.printf("Temperature: %.2f°C, Humidity: %.2f%%\n", temperature, humidity);
+
+      if(humidity >= GRENZWERT_FEUCHTE) {
+        REG_WRITE(GPIO_OUT_W1TS_REG, 1UL << LED_PIN);
+      }
+      else {
+        REG_WRITE(GPIO_OUT_W1TC_REG, 1UL << LED_PIN);
+
+      }
     }
   }
 }
